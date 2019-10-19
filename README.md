@@ -13,3 +13,11 @@ python setup.py install
 ```
 docker-compose up -d
 ```
+## Getting Started
+```
+import cooccurrence
+
+vectorizer = cooccurrence.CooccurrenceVectorizer(max_features=None, context_window=2) # context window of size 2
+vectorizer.fit(texts) # texts is a list of lists, it should look like [['He', 'is', 'not', 'lazy', 'He', 'is', 'intelligent', 'He', 'is', 'smart'], ["I", "love", "Singapore"]]
+vectors = vectorizer.transform(texts) # vectors would be a list of numpy arrays, each array will have shape (number_tokens, vocab_size)
+```
