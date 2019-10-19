@@ -24,6 +24,8 @@ class CooccurrenceVectorizer(base.BaseEstimator, VectorizerMixin):
         """
         texts: list
             list of lists, each list contains tokens
+
+        Builds/Updates vocabulary dictionary and cooccurrence matrix
         """
         if not (isinstance(texts, np.ndarray) or isinstance(texts, list)):
             raise TypeError("texts must be a list or numpy array")
@@ -36,6 +38,12 @@ class CooccurrenceVectorizer(base.BaseEstimator, VectorizerMixin):
         return self
 
     def transform(self, texts):
+        """
+        texts: list
+            list of lists, each list contains tokens
+
+        replace each token with their respective vector for ever data sample, returns a numpy matrix
+        """
         result = []
         num_vocab = len(self.vocab)
         for text in texts:
