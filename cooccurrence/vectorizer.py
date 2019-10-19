@@ -1,16 +1,18 @@
 from sklearn import base
+from sklearn.feature_extraction.text import VectorizerMixin
 import numpy as np
 
-class CooccurrenceVectorizer(BaseEstimator, VectorizerMixin):
-    def __init__(self, max_features, context_window=2):
+class CooccurrenceVectorizer(base.BaseEstimator, VectorizerMixin):
+    def __init__(self, max_features=None, context_window=2):
         """
         max_features: int
             take top features based on total occurrence counts
         context_window: int
             size of context window
         """
-        if not isinstance(max_features, int):
-            raise TypeError("max_features must be an integer")
+        if max_features is not None:
+            if not isinstance(max_features, int):
+                raise TypeError("max_features must be an integer")
         if not isinstance(context_window, int):
             raise TypeError("max_features must be an integer")
         self.max_features = max_features
@@ -45,7 +47,7 @@ class CooccurrenceVectorizer(BaseEstimator, VectorizerMixin):
                 else:
                     word_vec = self.cooc_matrix[idx, :]
                 temp.append(word_vec)
-            result.append(temp)
+            result.append(np.array(temp))
         return result
     
     def fit_transform(self, texts):
@@ -83,8 +85,8 @@ class CooccurrenceVectorizer(BaseEstimator, VectorizerMixin):
         new_vocab -= current_vocab
         for idx, word in enumerate(new_vocab):
             self.vocab[word] = current_num + idx
-            self.cooc_matrix = np.hstack((self.cooc_matrix, np.zeros((current_num, 1)))) # append new column to matrix
-            self.cooc_matrix = np.vstack((self.cooc_matrix, np.zeros((current_num, current_num + idx + 1)))) # append new row to matrix
+            self.cooc_matrix = np.hstack((self.cooc_matrix, np.zeros((current_num + idx, 1)))) # append new column to matrix
+            self.cooc_matrix = np.vstack((self.cooc_matrix, np.zeros((1, current_num + idx + 1)))) # append new row to matrix
 
     def build_matrix(self, texts):
         """
