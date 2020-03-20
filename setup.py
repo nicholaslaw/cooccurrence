@@ -8,7 +8,7 @@ setup(
    author_email='nicholas_law_91@hotmail.com',
    packages=['cooccurrence'],  #same as name
    install_requires=[
-       "numpy==1.17.2",
-       "scikit-learn==0.20.3"
+       "scikit-learn==0.22.2.post1",
+       "numpy==1.18.1"
    ], #external packages as dependencies
 )
