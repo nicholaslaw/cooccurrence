@@ -9,6 +9,6 @@ setup(
    packages=['cooccurrence'],  #same as name
    install_requires=[
        "scikit-learn==0.22.2.post1",
-       "numpy==1.18.1"
+       "numpy==1.22.0"
    ], #external packages as dependencies
 )
